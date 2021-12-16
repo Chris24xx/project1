@@ -5,7 +5,7 @@ class Manager:
         self.password = password
         self.full_name = full_name
 
-    def dictionary(self):
+    def manager_dictionary(self):
         return{
             "fullName" : self.full_name,
             "username" : self.username,

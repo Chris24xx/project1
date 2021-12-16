@@ -3,6 +3,8 @@ from exceptions.checked_exceptions import *
 from service.service_imp.employee_service_imp import EmployeeServiceImp, EmployeeDaoImp
 from service.service_imp.manager_service_imp import ManagerServiceImp, ManagerImp
 from flask import jsonify, request, Flask
+from entities.manager import Manager
+from entities.employee import Employee
 
 logging.basicConfig(filename="records.log", level=logging.DEBUG, format=f"%(asctime)s %(levelname)s %(message)s")
 
@@ -67,12 +69,11 @@ def login_validation():
         request_data = request.get_json()
         username = request_data["username"]
         password = request_data["password"]
-        manager_service.login_validation(username,password)
+        manager_service.login_validation(username, password)
         return "success"
     except IncorrectInfo as e:
-        message = {"erroe":str(e)}
+        message = {"erroe": str(e)}
         return jsonify(message)
-
 
 
 @app.patch("/project1/manager/requests/response/<request_id>")
@@ -105,6 +106,24 @@ def api_view_all_requests(manager_id):
 def display_statistic():
     data = request.get_json()
     pass
+
+@app.get("/project1/employee/info")
+def grab_employee_id():
+    info = employee_service.get_employee_id()
+    info_list = []
+    for i in info:
+        make_dict = i.employee_dictionary()
+        info_list.append(make_dict)
+    return jsonify(info_list)
+
+@app.get("/project1/manager/info")
+def grab_managers_id():
+    info = manager_service.grab_id()
+    info_list = []
+    for i in info:
+        make_dict = i.manager_dictionary()
+        info_list.append(make_dict)
+    return jsonify(info_list)
 
 
 app.run()

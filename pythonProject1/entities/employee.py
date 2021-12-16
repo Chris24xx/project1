@@ -5,7 +5,7 @@ class Employee:
         self.password = password
         self.employee_id = employee_id
 
-    def dictionary(self):
+    def employee_dictionary(self):
         return {
             "fullName": self.full_name,
             "username": self.username,

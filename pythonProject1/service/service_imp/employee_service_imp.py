@@ -16,8 +16,10 @@ class EmployeeServiceImp(EmployeeServiceAb):
             if employee_record.username == username:
                 if employee_record.password == password:
                     return True
-                else:
-                    return "incorrect information"
+                elif employee_record.password != password:
+                    raise IncorrectInfo("Incorrect Info")
+            else:
+                raise IncorrectInfo("Incorrect Info")
 
     def create_requests(self, request: int, reason: str, employee_id: int, manager_id):
         if request > 0:
@@ -40,3 +42,6 @@ class EmployeeServiceImp(EmployeeServiceAb):
     def view_response(self,request_id):
         info = self.employee_dao.employee_get_request_by_id(request_id)
         return info[2]
+
+    def get_employee_id(self):
+        return self.employee_dao.get_employee_info()

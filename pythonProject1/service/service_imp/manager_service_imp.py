@@ -74,3 +74,6 @@ class ManagerServiceImp(ManagerServiceAb):
         return_value = stat_func(manager_id)
         return return_value
 
+    def grab_id(self):
+        return self.manager_dao.get_login_info()
+
