@@ -1,0 +1,47 @@
+body{
+    background: radial-gradient(#000 0%, #fff 100%);
+}
+
+ul{
+    border: 5px double #1C6EA4;
+border-radius: 40px 0px 40px 0px;
+    width: 18%;
+}
+div .employee{
+    float: left;
+    border-width: 50%;
+    border-radius: 75%;
+    border-style: hidden;
+    padding: 50%;
+}
+
+div.employee>h1 + h3{
+    font-size: large;
+    font-weight: bolder;
+    font-variant: small-caps;
+    font-kerning: inherit;
+}
+div .employee h1{
+    text-align: center;
+}
+label{
+    font-weight: bolder;
+    font-style: italic;
+    color: rgb(20, 20, 114);
+}
+div .Manager{
+    float: left;
+    border-width: 50%;
+    border-radius: 75%;
+    border-style: hidden;
+    padding: 50%;
+}
+div .Manager h1 + h3{
+    font-size: large;
+    font-weight: bolder;
+    font-variant: small-caps;
+    font-kerning: inherit;
+}
+div .Manager h1{
+    text-align: center;
+}

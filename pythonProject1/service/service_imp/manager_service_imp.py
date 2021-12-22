@@ -70,10 +70,6 @@ class ManagerServiceImp(ManagerServiceAb):
         res = mode(temp)
         return res
 
-    def display_statistics(self, stat_func, manager_id):
-        return_value = stat_func(manager_id)
-        return return_value
-
     def grab_id(self):
         return self.manager_dao.get_login_info()
 

@@ -10,20 +10,19 @@ class EmployeeServiceImp(EmployeeServiceAb):
     def __init__(self, employee_dao: EmployeeDaoImp):
         self.employee_dao = employee_dao
 
-    def employee_login(self, username, password):
+    def employee_login(self, username: Employee, password: Employee):
         credentials = self.employee_dao.get_employee_info()
         for employee_record in credentials:
             if employee_record.username == username:
                 if employee_record.password == password:
                     return True
                 elif employee_record.password != password:
-                    raise IncorrectInfo("Incorrect Info")
-            else:
-                raise IncorrectInfo("Incorrect Info")
+                    return False
+        return False
 
     def create_requests(self, request: int, reason: str, employee_id: int, manager_id):
         if request > 0:
-            return self.employee_dao.create_requests(request, reason, employee_id,manager_id)
+            return self.employee_dao.create_requests(request, reason, employee_id, manager_id)
         else:
             raise NoNegativeException("Negative Input")
 
@@ -39,7 +38,7 @@ class EmployeeServiceImp(EmployeeServiceAb):
     def view_past_requests(self, employee_id):
         return self.employee_dao.get_all_request_employee(employee_id)
 
-    def view_response(self,request_id):
+    def view_response(self, request_id):
         info = self.employee_dao.employee_get_request_by_id(request_id)
         return info[2]
 

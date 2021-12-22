@@ -12,7 +12,8 @@ class ManagerImp(ManagerAb):
         return True
 
     def pending_requests(self, manager_id):
-        sql = "select requests from reimbursement where status is null and manager_id = %s"
+        sql = "select requests, response, request_id, employee_id from reimbursement where status is null and " \
+              "manager_id = %s "
         cur = connection.cursor()
         cur.execute(sql, [manager_id])
         request_data = cur.fetchall()
@@ -22,7 +23,8 @@ class ManagerImp(ManagerAb):
         return request_list
 
     def view_all_requests(self, manager_id):
-        sql = "select requests, managers_comment from reimbursement where manager_id = %s"
+        sql = "select requests, status, employee_id, managers_comment from reimbursement where status is not null and " \
+              "manager_id = %s "
         cur = connection.cursor()
         cur.execute(sql, [manager_id])
         request_data = cur.fetchall()
@@ -57,4 +59,3 @@ class ManagerImp(ManagerAb):
         for i in data:
             data_list.append(i)
         return data_list
-

@@ -6,7 +6,7 @@ manager_service = ManagerServiceImp(manager_dao)
 
 
 def test_status_change():
-    result = manager_service.request_response("Denied", "well Deserved", 9)
+    result = manager_service.request_response("Approved", "well Deserved", 9)
     assert result
 
 

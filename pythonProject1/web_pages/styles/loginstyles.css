@@ -1,0 +1,13 @@
+h1{
+    text-align: center;
+    text-transform: uppercase;
+    border: dashed;
+}
+div#login > h2{
+    font-weight: bolder;
+    font-style: italic;
+    font-variant: small-caps;
+}
+body{
+    background: radial-gradient(#000 0%, #fff 100%);
+}

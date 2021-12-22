@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager</title>
+    <script src="../web_pages/js/manager_home_pg.js"></script>
+    <link rel="stylesheet" href="../web_pages/styles/styles.css">
+</head>
+<body>
+    <div class = "Manager">
+        <h1>Manager Portal</h1>
+        <h2>input Id to get List</h2>
+        <label for="id-2">Manager Id</label>
+        <input type="number" name="manager_id" id="id-2">
+        <input type="submit" onclick="view_requests()">
+        <ul id = "requests">
+            <h3>Request List</h3>
+
+        </ul>
+    </div>
+    <div class = 'Manager'>
+        <h3>View all Requests</h3>
+        <label for="m-id3">Enter Manager Id to see all requests</label>
+        <input type="number" name="manager_id" id="m-id3">
+        <input type="submit" onclick="viewAllRequests()">
+        <ul id = "all_requests">
+            <h3>Reimbursement List</h3>
+        </ul>
+    </div>
+    <div class = Manager>
+        <h3>Statistics of Employee Requests</h3>
+        <input type="number"  id="m-id4">
+        <label for="m-id4">manager id</label>
+    </div>
+    <div class = Manager>
+        <input type="radio" id="selectChoice1"
+        name="stat" value="sum">
+        <label for="contactChoice1">Sum</label>
+
+        <input type="radio" id="selectChoice2"
+        name="stat" value="min">
+        <label for="contactChoice2">Min</label>
+
+        <input type="radio" id="selectChoice3"
+        name="stat" value="max">
+        <label for="contactChoice3">Max</label>
+
+        <input type="radio" name="stat" id="selectChoice4"
+        value = "avg">
+        <label for="selectChoice4">Average</label>
+
+        <input type="radio" name="stat" id="selectChoice5"
+        value = "Freq">
+        <label for="selectChoice5">Frequency</label>
+        <input type="submit" onclick="statistic()" >
+    </div>
+    <div id = newInfo>
+        <h3>stat info</h3>
+        <p id = "returnedInfo"> </p>
+    </div>
+    <div class = Manager>
+        <h3>Input the required info to change request</h3>
+        <label for="comment">Enter your comment</label>
+        <input type="text" name="Comment" id="comment">
+        <label for="status">Approve or Deny?</label>
+        <input type="text" name="status" id="status">
+        <label for="m-id">Enter the Request Id</label>
+        <input type="number" name="request_id" id="r-id">
+        <input type="submit" onclick="updateRequest()">
+    </div>
+   
+</body>
+</html>

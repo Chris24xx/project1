@@ -1,14 +1,15 @@
 import logging
+
 from exceptions.checked_exceptions import *
 from service.service_imp.employee_service_imp import EmployeeServiceImp, EmployeeDaoImp
 from service.service_imp.manager_service_imp import ManagerServiceImp, ManagerImp
 from flask import jsonify, request, Flask
-from entities.manager import Manager
-from entities.employee import Employee
+from flask_cors import CORS
 
 logging.basicConfig(filename="records.log", level=logging.DEBUG, format=f"%(asctime)s %(levelname)s %(message)s")
 
 app: Flask = Flask(__name__)
+CORS(app)
 employee_dao = EmployeeDaoImp()
 employee_service = EmployeeServiceImp(employee_dao)
 manager_dao = ManagerImp()
@@ -17,18 +18,19 @@ manager_service = ManagerServiceImp(manager_dao)
 
 @app.post("/project1/employee/login")
 def api_employee_login():
-    try:
-        request_data = request.get_json()
-        username = request_data["username"]
-        password = request_data["password"]
-        manager_service.login_validation(username, password)
-        return "success"
-    except IncorrectInfo as e:
-        message = {"erroe": str(e)}
+    request_data = request.get_json()
+    username = request_data["username"]
+    password = request_data["password"]
+    login = employee_service.employee_login(username, password)
+    if login:
+        message = "success"
+        return jsonify(message)
+    else:
+        message = "try again"
         return jsonify(message)
 
 
-@app.post("/project1/requests/create/<employee_id>/<manager_id>")
+@app.post("/project1/employee/requests/create/<employee_id>/<manager_id>")
 def api_create_requests(employee_id, manager_id):
     try:
         request_data = request.get_json()
@@ -36,7 +38,8 @@ def api_create_requests(employee_id, manager_id):
         reason = request_data["reason"]
         requests = request_data["requests"]
         employee_service.create_requests(int(requests), reason, int(employee_id), manager_id)
-        return "your request {} with your reason {} has been sent".format(requests, reason)
+        message = "your request {} with your reason {} has been sent".format(requests, reason)
+        return jsonify(message), 200
     except NoNegativeException as e:
         error_message = {"error": str(e)}
         return jsonify(error_message)
@@ -70,9 +73,10 @@ def login_validation():
         username = request_data["username"]
         password = request_data["password"]
         manager_service.login_validation(username, password)
-        return "success"
+        message = "success"
+        return jsonify(message)
     except IncorrectInfo as e:
-        message = {"erroe": str(e)}
+        message = {"error": str(e)}
         return jsonify(message)
 
 
@@ -82,7 +86,9 @@ def request_response(request_id):
     status = data["status"]
     comment = data["comment"]
     int(request_id)
-    manager_service.request_response(status, comment, int(request_id))
+    manager_service.request_response(str(status), comment, int(request_id))
+    message = "Success"
+    return jsonify(message), 200
 
 
 @app.get("/project1/manager/requests/pending/<manager_id>")
@@ -103,9 +109,35 @@ def api_view_all_requests(manager_id):
     return jsonify(info_list)
 
 
-def display_statistic():
-    data = request.get_json()
-    pass
+@app.get("/project1//manager/requests/view/statistics/add/<manager_id>")
+def api_add(manager_id):
+    info = manager_service.sum(int(manager_id))
+    return jsonify(info)
+
+
+@app.get("/project1/manager/requests/view/statistics/avg/<manager_id>")
+def api_avg(manager_id):
+    info = manager_service.avg(int(manager_id))
+    return jsonify(info)
+
+
+@app.get("/project1/manager/requests/view/statistics/freq/<manager_id>")
+def api_freq(manager_id):
+    info = manager_service.freq(int(manager_id))
+    return jsonify(info)
+
+
+@app.get("/project1/manager/requests/view/statistics/max/<manager_id>")
+def api_max(manager_id):
+    info = manager_service.max(int(manager_id))
+    return jsonify(info)
+
+
+@app.get("/project1/manager/requests/view/statistics/min/<manager_id>")
+def api_min(manager_id):
+    info = manager_service.min(int(manager_id))
+    return jsonify(info)
+
 
 @app.get("/project1/employee/info")
 def grab_employee_id():
@@ -115,6 +147,7 @@ def grab_employee_id():
         make_dict = i.employee_dictionary()
         info_list.append(make_dict)
     return jsonify(info_list)
+
 
 @app.get("/project1/manager/info")
 def grab_managers_id():
